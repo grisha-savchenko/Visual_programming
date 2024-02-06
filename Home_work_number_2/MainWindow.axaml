@@ -1,0 +1,42 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
+        x:Class="Home_work_number_2.MainWindow"
+        Width="600" Height="400"
+        MinHeight="300" MinWidth="300"       
+        Title="Home_work_number_2">
+        <Window.Styles>
+            <Style Selector="Button">
+                <!-- <Setter Property="Click" Value="Back"></Setter> -->
+                <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+                <Setter Property="BorderThickness" Value="3"></Setter>
+                <Setter Property="BorderBrush" Value="Black"></Setter>
+                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+            </Style>
+        </Window.Styles>
+    <Grid ColumnDefinitions="0.3*, 0.01*, 0.6*">
+        <ScrollViewer FontSize="15">
+            <StackPanel Grid.Column="0">
+                <Button Background="khaki" Click="Button_Click">khaki</Button>
+                <Button Background="Red" Click="Button_Click">Red</Button>
+                <Button Background="MediumVioletRed" Click="Button_Click">MediumVioletRed</Button>
+                <Button Background="Bisque" Click="Button_Click">Bisque</Button>
+                <Button Background="LemonChiffon" Click="Button_Click">LemonChiffon</Button>
+                <Button Background="PowderBlue" Click="Button_Click">PowderBlue</Button>
+                <Button Background="MintCream" Click="Button_Click">MintCream</Button>
+                <Button Background="Maroon" Click="Button_Click">Maroon</Button>
+                <Button Background="RosyBrown" Click="Button_Click">RosyBrown</Button>
+                <Button Background="LightPink" Click="Button_Click">LightPink</Button>
+            </StackPanel>
+        </ScrollViewer>
+    <GridSplitter Grid.Column="1" Background="Black">
+    </GridSplitter>
+    <!-- <Border x:Name="rectangle" Background="Khaki" Grid.Column="2">
+    </Border> -->
+    <Border Grid.Column="2">
+            <Rectangle x:Name="rectangle" Fill="Khaki"/>
+    </Border>
+    </Grid>
+</Window>
