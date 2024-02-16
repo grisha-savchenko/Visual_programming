@@ -1,0 +1,91 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dc="clr-namespace:hw3"
+        mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="500"
+        x:Class="hw3.MainWindow"
+        x:DataType="dc:Calculator"
+        Width="300"
+        Height="500"
+        Title="hw3">
+    <Window.DataContext>
+        <dc:Calculator/>
+    </Window.DataContext>
+    <Design.DataContext>
+        <dc:Calculator/>
+    </Design.DataContext>
+        <Window.Styles>
+             <Style Selector="Button">
+                <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+                <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
+                <Setter Property="BorderThickness" Value="1"></Setter>
+                <Setter Property="BorderBrush" Value="#000001"></Setter>
+                <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                <Setter Property="Margin" Value="2"></Setter>
+                <Setter Property="FontSize" Value="25"></Setter>
+                <!-- <Setter Property="CommandParameter" Value="Content"></Setter> -->
+            </Style>
+            
+            <Style Selector="Button.h2">
+                <Setter Property="Background" Value="#00AAFF"></Setter>
+                <Setter Property="Command" Value="{Binding AddNumderCommand}"></Setter>
+            </Style>
+            <Style Selector="Button.h1">
+                <Setter Property="Command" Value="{Binding OperationCommand}"></Setter>
+                <Setter Property="Background" Value="#ffffdd"></Setter>
+            </Style>
+            <Style Selector="TextBlock">
+                <Setter Property="FontSize" Value="27"></Setter>
+            </Style>
+            
+        </Window.Styles>
+    
+     <Grid VerticalAlignment="Stretch" ColumnDefinitions="0.25*, 0.25*, 0.25*, 0.25*" RowDefinitions="0.10*, 0.10*,0.8*">
+         <StackPanel Background="green" Grid.Column="0" Grid.RowSpan="2" Grid.Row="2">
+            <Button Classes="h1" Content="sin" CommandParameter="sin"/>
+            <Button Classes="h1" Content="ceil" CommandParameter="ceil"></Button>
+            <Button Classes="h1" Content="ln" CommandParameter="ln"></Button>
+            <Button Classes="h2" Content="7" CommandParameter="7"></Button>
+            <Button Classes="h2" Content="4" CommandParameter="4"></Button>
+            <Button Classes="h2" Content="1" CommandParameter="1"></Button>
+            <Button Background="#FFAAFF" Content="C" Command="{Binding ClearCommand}"></Button>
+        </StackPanel>
+        <StackPanel Background="red" Grid.Column="1" Grid.Row="2">
+            <Button Classes="h1" Content="cos" CommandParameter="cos"></Button>
+            <Button Classes="h1" Content="floor" CommandParameter="floor"></Button>
+            <Button Classes="h1" Content="lg" CommandParameter="lg"></Button>
+            <Button Classes="h2" Content="8" CommandParameter="8"></Button>
+            <Button Classes="h2" Content="5" CommandParameter="5"></Button>
+            <Button Classes="h2" Content="2" CommandParameter="2"></Button>
+            <Button Classes="h2" Content="0" CommandParameter="0"></Button>
+        </StackPanel>
+        <StackPanel Background="pink" Grid.Column="2" Grid.Row="2">
+            <Button Classes="h1" Content="tg" CommandParameter="tg"></Button>
+            <Button Classes="h1" Content="!" CommandParameter="!"></Button>
+            <Button  Classes="h1" Content="^" CommandParameter="^"></Button>
+            <Button Classes="h2" Content="9" CommandParameter="9"></Button>
+            <Button Classes="h2" Content="6" CommandParameter="6"></Button>
+            <Button Classes="h2" Content="3" CommandParameter="3"></Button>
+            <Button Background="#FFFF11" Content="," Command="{Binding Dot}"></Button>
+        </StackPanel>
+        <StackPanel Background="blue" Grid.Column="3" Grid.Row="2">
+            <Button Background="Red" Content="del" Command="{Binding DelCommand}"></Button>
+            <Button Classes="h1" Content="mod" CommandParameter="mod"></Button>
+            <Button  Classes="h1" Content="/" CommandParameter="/"></Button>
+            <Button Classes="h1" Content="*" CommandParameter="*"></Button>
+            <Button Classes="h1" Content="-" CommandParameter="-"></Button>
+            <Button  Classes="h1" Content="+" CommandParameter="+"></Button>
+            <Button  Background="Green" Content="=" Command="{Binding EquallyCommand}"></Button>
+        </StackPanel>
+    
+
+        <StackPanel Grid.ColumnSpan="4" HorizontalAlignment="Right" Spacing="0" Margin="0,7,20,0" Orientation="Horizontal">
+            <TextBlock Text="{Binding Operation2}" />
+            <TextBlock Text="{Binding OperandA}" />
+            <TextBlock Text="{Binding Operation}" />
+            <TextBlock Text="{Binding OperandB}"/>
+        </StackPanel>
+        <TextBlock Grid.ColumnSpan="4"  Grid.Row="1" Text="{Binding Answer}" Margin="0,0,20,15" TextAlignment="Right" FontSize="50" />
+    </Grid>
+</Window>
