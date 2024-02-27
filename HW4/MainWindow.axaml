@@ -14,9 +14,6 @@
     <Window.DataContext>
 		<local:FileSystemViewModel/>
 	</Window.DataContext>
-	<!-- <Design.DataContext>
-        <local:FileSystemViewModel/>
-    </Design.DataContext> -->
 
 	<ListBox ItemsSource="{Binding FileSystemEntries}" SelectedItem="{Binding SelectedEntry}" DoubleTapped="TapOnSquare">
             <ListBox.ItemTemplate>

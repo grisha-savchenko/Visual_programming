@@ -10,8 +10,15 @@ namespace HW4
 {
    public class FileSystemViewModel : INotifyPropertyChanged
     {
+
+        private Bitmap iconFile = new Bitmap("./Assets/file.png");
+        private Bitmap iconDirectory = new Bitmap("./Assets/papka.png");
+        private Bitmap iconDirectoryUp = new Bitmap("./Assets/dir_up.jpg");
+        private Bitmap iconDisk = new Bitmap("./Assets/disk.png");
         private ObservableCollection<FileSystemEntry> _fileSystemEntries;
         private FileSystemEntry _selectedEntry;
+
+        
 
         public ObservableCollection<FileSystemEntry> FileSystemEntries
         {
@@ -43,25 +50,44 @@ namespace HW4
 
         public FileSystemViewModel()
         {
-            LoadFileSystemEntries(Directory.GetCurrentDirectory());
+            LoadLogicalDrives();
+        }
+
+        public void LoadLogicalDrives()
+        {
+            FileSystemEntries = new ObservableCollection<FileSystemEntry>();
+
+            CurrentDirectory = "";
+
+            foreach (var drive in DriveInfo.GetDrives())
+            {
+                if (drive.IsReady)
+                {
+                    FileSystemEntries.Add(new FileSystemEntry
+                    {
+                        Name = drive.Name,
+                        Icon = iconDisk,
+                        IsDirectory = true,
+                    });
+                }
+            }
         }
 
         public void LoadFileSystemEntries(string directoryPath)
         {
-            CurrentDirectory = directoryPath;
+            DirectoryInfo dirInfo = new DirectoryInfo(directoryPath);
+            string path = dirInfo.FullName;
+            CurrentDirectory = path;
 
             FileSystemEntries = new ObservableCollection<FileSystemEntry>();
 
             // Добавление ".." в качестве первого элемента, если это не корневая директория
-            if (Directory.GetParent(directoryPath) != null)
-            {
                 FileSystemEntries.Add(new FileSystemEntry
                 {
                     Name = "..",
-                    Icon = new Bitmap("./Assets/dir_up.jpg"),
+                    Icon = iconDirectoryUp,
                     IsDirectory = true
                 });
-            }
 
             // Загрузка файлов и директорий
             foreach (var directory in Directory.GetDirectories(directoryPath))
@@ -69,7 +95,7 @@ namespace HW4
                 FileSystemEntries.Add(new FileSystemEntry
                 {
                     Name = Path.GetFileName(directory),
-                    Icon = new Bitmap("./Assets/papka.png"),
+                    Icon = iconDirectory,
                     IsDirectory = true
                 });
             }
@@ -79,7 +105,7 @@ namespace HW4
                 FileSystemEntries.Add(new FileSystemEntry
                 {
                     Name = Path.GetFileName(file),
-                    Icon = new Bitmap("./Assets/file.png"),
+                    Icon = iconFile,
                     IsDirectory = false
                 });
             }
