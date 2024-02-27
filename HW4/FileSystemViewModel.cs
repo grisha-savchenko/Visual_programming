@@ -106,5 +106,6 @@ namespace HW4
         public string Name { get; set; }
         public Bitmap Icon { get; set; }
         public bool IsDirectory { get; set; }
+
     }
 }
