@@ -15,14 +15,26 @@
 		<local:FileSystemViewModel/>
 	</Window.DataContext>
 
-	<ListBox ItemsSource="{Binding FileSystemEntries}" SelectedItem="{Binding SelectedEntry}" DoubleTapped="TapOnSquare">
+	<Design.DataContext>
+		<local:FileSystemViewModel/>
+	</Design.DataContext>
+    <Grid ColumnDefinitions="0.25*, 0.75*">
+	    <ListBox Grid.Column="0" ItemsSource="{Binding FileSystemEntries}" Tapped="OneTap" SelectedItem="{Binding SelectedEntry}" DoubleTapped="TapOnSquare">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="{Binding Icon}" Width="16" Height="16" />
+						<Image Source="{Binding Icon}" Width="16" Height="16">
+							   <ToolTip.Tip>
+								   <TextBlock FontSize="12" Text="{Binding FullName}"/>
+							   </ToolTip.Tip>
+						</Image>
                         <TextBlock Text="{Binding Name}" />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+		<ListBox Grid.Column="1" Tapped="OneTap">
+						<Image Source="{Binding Img}"/>
+		</ListBox>
+	</Grid>
 </Window>

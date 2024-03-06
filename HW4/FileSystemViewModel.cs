@@ -4,21 +4,50 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Avalonia.Media.Imaging;
+using Avalonia.Media;
+using System;
+using System.Runtime;
 
 
 namespace HW4
 {
-   public class FileSystemViewModel : INotifyPropertyChanged
+    public class FileSystemViewModel : INotifyPropertyChanged
     {
 
-        private Bitmap iconFile = new Bitmap("./Assets/file.png");
-        private Bitmap iconDirectory = new Bitmap("./Assets/papka.png");
-        private Bitmap iconDirectoryUp = new Bitmap("./Assets/dir_up.jpg");
-        private Bitmap iconDisk = new Bitmap("./Assets/disk.png");
+        private Bitmap iconFile = new Bitmap("D:\\repo\\HW4\\Assets\\file.png");
+        private Bitmap iconDirectory = new Bitmap("D:\\repo\\HW4\\Assets\\papka.png");
+        private Bitmap iconDirectoryUp = new Bitmap("D:\\repo\\HW4\\Assets\\dir_up.jpg");
+        private Bitmap iconDisk = new Bitmap("D:\\repo\\HW4\\Assets\\disk.png");
         private ObservableCollection<FileSystemEntry> _fileSystemEntries;
         private FileSystemEntry _selectedEntry;
 
-        
+        private Bitmap _img;
+
+        public void MyViewModel(string Img_path)
+        {
+            DirectoryInfo dirInfo = new DirectoryInfo(Img_path);
+            if (dirInfo.Exists)
+                return;
+            string path = dirInfo.FullName;
+            try
+            {
+                Img = new Bitmap(path);
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+
+        public Bitmap Img
+        {
+            get => _img;
+            set
+            {
+                _img = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ObservableCollection<FileSystemEntry> FileSystemEntries
         {
@@ -53,6 +82,7 @@ namespace HW4
             LoadLogicalDrives();
         }
 
+
         public void LoadLogicalDrives()
         {
             FileSystemEntries = new ObservableCollection<FileSystemEntry>();
@@ -68,6 +98,7 @@ namespace HW4
                         Name = drive.Name,
                         Icon = iconDisk,
                         IsDirectory = true,
+                        FullName = drive.Name
                     });
                 }
             }
@@ -76,8 +107,11 @@ namespace HW4
         public void LoadFileSystemEntries(string directoryPath)
         {
             DirectoryInfo dirInfo = new DirectoryInfo(directoryPath);
+            if (!dirInfo.Exists)
+                return;
             string path = dirInfo.FullName;
             CurrentDirectory = path;
+
 
             FileSystemEntries = new ObservableCollection<FileSystemEntry>();
 
@@ -86,7 +120,8 @@ namespace HW4
                 {
                     Name = "..",
                     Icon = iconDirectoryUp,
-                    IsDirectory = true
+                    IsDirectory = true,
+                    FullName = dirInfo.FullName + "\\" + Path.GetFileName("..")
                 });
 
             // Загрузка файлов и директорий
@@ -96,7 +131,8 @@ namespace HW4
                 {
                     Name = Path.GetFileName(directory),
                     Icon = iconDirectory,
-                    IsDirectory = true
+                    IsDirectory = true,
+                    FullName = dirInfo.FullName + "\\" + Path.GetFileName(directory)
                 });
             }
 
@@ -106,7 +142,8 @@ namespace HW4
                 {
                     Name = Path.GetFileName(file),
                     Icon = iconFile,
-                    IsDirectory = false
+                    IsDirectory = false,
+                    FullName = dirInfo.FullName + "\\" +  Path.GetFileName(file)
                 });
             }
         }
@@ -132,6 +169,7 @@ namespace HW4
         public string Name { get; set; }
         public Bitmap Icon { get; set; }
         public bool IsDirectory { get; set; }
+        public string FullName { get; set; }
 
     }
 }

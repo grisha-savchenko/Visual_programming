@@ -21,34 +21,43 @@ namespace HW4
 
         
         public void TapOnSquare(object sender, TappedEventArgs e)
-{
-        if (e.Source is Control listBoxItem && listBoxItem.DataContext is FileSystemEntry entry)
         {
-            // Perform the action when a FileSystemEntry is tapped
-            // For example, navigate to the directory if it's a directory
-            if (entry.IsDirectory)
+            if (e.Source is Control listBoxItem && listBoxItem.DataContext is FileSystemEntry entry)
             {
-                var viewModel = DataContext as FileSystemViewModel;
-                if (viewModel != null)
+                if (entry.IsDirectory)
                 {
-                    int len = viewModel.CurrentDirectory.Length;
-                    string newPath = Path.Combine(viewModel.CurrentDirectory, entry.Name);
-                    if(entry.Name == ".." && viewModel.CurrentDirectory[len-2] == ':' && viewModel.CurrentDirectory[len-1] == '\\')
-                        viewModel.LoadLogicalDrives();
-                    else
-                        viewModel.LoadFileSystemEntries(newPath);
+                    var viewModel = DataContext as FileSystemViewModel;
+                    if (viewModel != null)
+                    {
+                        int len = viewModel.CurrentDirectory.Length;
+                        string newPath = Path.Combine(viewModel.CurrentDirectory, entry.Name);
+                        if (entry.Name == ".." && viewModel.CurrentDirectory[len - 2] == ':' && viewModel.CurrentDirectory[len - 1] == '\\')
+                            viewModel.LoadLogicalDrives();
+                        else
+                            viewModel.LoadFileSystemEntries(newPath);
+      
+                    }
                 }
-            }
-            else
-            {
-                var viewModel = DataContext as FileSystemViewModel;
-                if (viewModel != null)
+                else
                 {
-                    string newPath = Path.Combine(viewModel.CurrentDirectory, entry.Name);
-                    viewModel.LoadFileSystemEntries(newPath);
+                    var viewModel = DataContext as FileSystemViewModel;
+                    if (viewModel != null)
+                    {
+                        string newPath = Path.Combine(viewModel.CurrentDirectory, entry.Name);
+                        viewModel.LoadFileSystemEntries(newPath);
+                    }
                 }
             }
         }
-}
+
+        public void OneTap(object sender, TappedEventArgs e)
+        {
+            if (e.Source is Control listBoxItem && listBoxItem.DataContext is FileSystemEntry entry)
+            {
+                var viewModel = DataContext as FileSystemViewModel;
+                string newPath = Path.Combine(viewModel.CurrentDirectory, entry.Name);
+                viewModel.MyViewModel(newPath);
+            }
+        }
     }
 }
