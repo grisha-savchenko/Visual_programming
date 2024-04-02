@@ -1,0 +1,42 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:HW9">
+  <Design.PreviewWith>
+    <controls:MySlider />
+  </Design.PreviewWith>
+
+  <Style Selector="controls|MySlider">
+    <!-- Set Defaults -->
+    <Setter Property="Template">
+      <ControlTemplate>
+        <StackPanel>
+        
+
+        <!-- <Grid>
+        </Grid> -->
+
+        <Button Command="{Binding RectangleTappedAction, RelativeSource={RelativeSource TemplatedParent}}" HorizontalAlignment="Center" VerticalAlignment="Center" 
+          IsVisible="{Binding !IsActivated, RelativeSource={RelativeSource TemplatedParent}}"
+					  Background="Green" Height="100" Width="100">
+				  <Image Width="50" Height="50" Source="/Assets/avalonia-logo.ico"></Image>
+			  </Button>
+
+
+        <Grid ColumnDefinitions="0.75*, 0.25*" RowDefinitions="0.5*, 0.5*" Margin="10" IsVisible="{Binding IsActivated, RelativeSource={RelativeSource TemplatedParent}}">
+			<Slider x:Name="slider" Grid.Row="1"/>
+			<TextBlock Text="{Binding #slider.Value}"
+						 HorizontalAlignment="Center"
+					    Grid.Column="0"/>
+          <Button Command="{Binding CloseButtonAction, RelativeSource={RelativeSource TemplatedParent}}" HorizontalAlignment="Center" VerticalAlignment="Center" 
+          Grid.Column="1"
+		  Grid.Row="1"
+					  Background="Red" Height="50" Width="100" 
+				  HorizontalContentAlignment="Center"
+				  VerticalContentAlignment="Center"
+				  Content="Close"/>
+        </Grid>
+        </StackPanel>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+</Styles>
